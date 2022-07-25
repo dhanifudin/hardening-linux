@@ -38,7 +38,7 @@
   ```
   Unatended-Upgrade::Automatic-Reboot "true";
   ```
-7. Finally eddit the /etc/apt/listchanges.conf and set email  ID:
+7. Finally edit the /etc/apt/listchanges.conf and set email  ID:
    ```
    email_address=sysadmin@yourcompany.com
    ```
@@ -83,3 +83,77 @@ Command to kill a process
    kernel.core_pattern=!/bin/false
    ```
 5. Save and close the file. Finally run the `sudo sysctl -p /etc/sysctl.d/9999-disable-core-dump.conf`
+
+- Remove legacy services
+- Disable any services ans applications starteddd by `xinetd` or `inetd` that
+  are not being utilizedd. Remove xinetd
+- Disable or remove server services (FTP, DNS, LDAP, NFS, SNMP etc) that are not
+  used
+- Ensure syslog (rsyslog, syslog, syslogng) service is running
+- Enable a network time protocol (NTP) service to ensure clock accuracy
+- Restrict the use of the cron and at services
+
+## Enforce Strong Password Management
+## Restrict User From Using Previous Passwords
+## Ensure No Accounts Have Empty Passwords
+  ```
+  awk -F: '($2 == "") {print}' /etc/shadow
+  ```
+## Disable Unnecessary Accounts
+  Command to view users who have been inactive from past 90 days
+  ```
+  lastlog -b 90 | tail -n+2 | grep -v 'Never logged in'
+  ```
+
+  Command to disable a user
+  ```
+  usermod -L [user]
+  ```
+
+## Create Separate Disk Partitions for Linux System
+- Separate OS files from user files for higher data security
+- Ensure that the following file systems are mounted on separate partitions
+  - /usr
+  - /home
+  - /var and /var/tmp
+  - /tmp
+- Create separate partitions for **Apache** and **FTP** server roots
+- Edit and update following configuration settings in /etc/fstab file
+  - noexec: Do not set execution of any binaries on this partition (prevents
+    execution of binaries but allows scripts).
+  - nodev: Do not allow character or special devices on this partition (prevents
+    use of device files such as zero, sda, etc)
+  - nosuid: Do not set SUID/SGID access on this partition (prevent the setuid bit)
+
+  Example of `/etc/fstab`
+
+  ```
+  /dev/sda04    /ftpdata ext3   defaults,nosuid,nodev,noexec 1 2
+  ```
+## Remove or Rectify Permissions for World Writable Files
+- View World Writable Files Without Sticky Bit
+  ```
+  find /home/alice -xdev -type d \( -perm -0002 -a ! -perm -1000 \) -print
+  ```
+- View no owner files
+  ```
+  find /home/alice -xdev \( -nouser -o -nogroup \) -print
+  ```
+
+## Disable USB Storage
+- Disable USB Storage using the system BIOS Configuration option
+- Disable kernel support for USB via GRUB
+- In Debian based distribution, block usb-storage module from loading into Linux
+  kernel
+  ```
+  cd /lib/modules/<kernel version/kernel/drivers/usb/storage
+  sudo mv usb-storage.ko usb-storage.ko.blacklist
+  ```
+- Red Hat debian based distribution, disable USB storage with using fake install
+  or blacklist usb-storage
+  ```
+  # modify file at /etc/modprobe.d/blacklist.conf
+  vi /etc/modprobe.d/blacklist.conf
+  # put blacklist statement
+  blacklist usb-storage
+  ```
