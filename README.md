@@ -15,54 +15,54 @@
 - Automatic Updates
 
 1. Update the server, run:
-```
-sudo apt update && sudo apt  upgrade
-```
+  ```
+  sudo apt update && sudo apt  upgrade
+  ```
 2. Install unattended upgrades on Ubuntu.  Type the following command
-```
-sudo apt install unattended-upgrades apt-listchanges bsd-mailx
-```
+  ```
+  sudo apt install unattended-upgrades apt-listchanges bsd-mailx
+  ```
 3. Turn on unattended  security updates, run then select **Yes**
-```
-sudo dpkg-reconfigure  -plow unattended-upgrades
-```
+  ```
+  sudo dpkg-reconfigure  -plow unattended-upgrades
+  ```
 4. Configure automatic updates, enter:
-```
-sudo  vi /etc/apt/apt.conf.d/50unattended-upgrades
-```
+  ```
+  sudo  vi /etc/apt/apt.conf.d/50unattended-upgrades
+  ```
 5. Set up  alert email ID:
-```
-Unatended-Upgrade::Mail  "sysadmin@yourcompany.com";
-```
+  ```
+  Unatended-Upgrade::Mail  "sysadmin@yourcompany.com";
+  ```
 6. Automatically reboot Ubuntu box  WITHOUT CONFIRMATION  for kernel updates
-```
-Unatended-Upgrade::Automatic-Reboot "true";
-```
+  ```
+  Unatended-Upgrade::Automatic-Reboot "true";
+  ```
 7. Finally eddit the /etc/apt/listchanges.conf and set email  ID:
- ```
- email_address=sysadmin@yourcompany.com
- ```
+   ```
+   email_address=sysadmin@yourcompany.com
+   ```
 8. Verify that it is working  by running the following command:
-```
-sudo unattended-upgrades  --dry-run
-```
+  ```
+  sudo unattended-upgrades  --dry-run
+  ```
 
 ## Disabling Unnecessary Services
 
 Command to stop a service
-```
-sudo systemctl stop [service]
-```
+  ```
+  sudo systemctl stop [service]
+  ```
 
 Command to disable [service]
-```
-sudo systemctl disable [service]
-```
+  ```
+  sudo systemctl disable [service]
+  ```
 
 Command to kill a process
-```
-sudo kill -9 [process_id]
-```
+  ```
+  sudo kill -9 [process_id]
+  ```
 
 ## OS Hardening
 
