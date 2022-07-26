@@ -281,3 +281,19 @@ net.ipv4.ip_local_port_range = 2000 65000
 # RFC 1337 fix
 net.ipv4.tcp_rfc1337=1
 ```
+
+## TCP Wrappers
+
+[Reference](https://www.tecmint.com/secure-linux-tcp-wrappers-hosts-allow-deny-restrict-access/)
+
+## Monitor Open Ports and Services
+
+Use `netstat -tulpn` or `ss -tulpn` command displays all open ports and
+associated services
+
+## Secure SSH Login Root Login
+
+Disable SSH root login using any of the following methods
+- Disable `PermitRootLogin` in the `/etc/ssh/sshd_config` file
+- Add the root user in `DenyUsers` list on `/etc/ssh/sshd_config` file
+- Deny the root user via `/etc/ssh/sshd.deny` file
